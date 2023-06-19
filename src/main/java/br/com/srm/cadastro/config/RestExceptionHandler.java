@@ -3,6 +3,8 @@ package br.com.srm.cadastro.config;
 import br.com.srm.cadastro.util.NotFoundException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -55,6 +57,16 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(errorResponse, exception.getStatusCode());
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(
+            final RuntimeException exception) {
+        final ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setException(exception.getClass().getSimpleName());
+        errorResponse.setMessage(exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Throwable.class)
     @ApiResponse(responseCode = "4xx/5xx", description = "Error")
     public ResponseEntity<ErrorResponse> handleThrowable(final Throwable exception) {
@@ -63,6 +75,17 @@ public class RestExceptionHandler {
         errorResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorResponse.setException(exception.getClass().getSimpleName());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ApiResponse(responseCode = "4xx/5xx", description = "Error")
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(final DataIntegrityViolationException exception) {
+        exception.printStackTrace();
+        final ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setException(exception.getClass().getSimpleName());
+        errorResponse.setMessage(exception.getLocalizedMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }
