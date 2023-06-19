@@ -56,7 +56,7 @@ Execute o seguinte comando para executar a aplicação localmente
 #### Swagger UI
 
 ```bash
-  http://localhost:{PORTA}/v1/swagger-ui.html
+  http://localhost:{$PORTA}/v1/swagger-ui.html
 ```
 ## Tecnologias utilizadas
 
