@@ -1,44 +1,72 @@
-# Cadastro
+# Projeto de Cadastro de pessoas
+Projeto de Cadastro de pessoas (Desafio Técnico).
 
-This app was created with Bootify.io - tips on working with the code [can be found here](https://bootify.io/next-steps/).
-Feel free to contact us for further questions.
+Foi utilizado DDD para garantir uma boa escalabilidade do projeto, as regras de negócio estão encapsuladas dentro das entidades. O código foi escrito tentando seguir ao máximo os principios **SOLID**.
 
-## Development
+#### Observações
 
-Update your local database connection in `application.properties` or create your own `application-local.properties` file to override
-settings for development.
+É necessário ter instalado a JDK 17 (Devido ao Spring 3.1)
 
-During development it is recommended to use the profile `local`. In IntelliJ `-Dspring.profiles.active=local` can be
-added in the VM options of the Run Configuration after enabling this property in "Modify options".
+## Rodando localmente
 
-Lombok must be supported by your IDE. For IntelliJ install the Lombok plugin and enable annotation processing -
-[learn more](https://bootify.io/next-steps/spring-boot-with-lombok.html).
+Clone o projeto
 
-After starting the application it is accessible under `localhost:8080`.
-
-## Build
-
-The application can be built using the following command:
-
-```
-gradlew clean build
+```bash
+  git clone https://github.com/thiagoyudji/cadastro.git
 ```
 
-Start your application with the following command - here with the profile `production`:
+Entre no diretório do projeto
 
+```bash
+  cd cadastro
 ```
-java -Dspring.profiles.active=production -jar ./build/libs/cadastro-0.0.1-SNAPSHOT.jar
-```
+Com a JDK 17 Instalada rode o comando de build para preparar o projeto em sua máquina
 
-If required, a Docker image can be created with the Spring Boot plugin. Add `SPRING_PROFILES_ACTIVE=production` as
-environment variable when running the container.
-
-```
-gradlew bootBuildImage --imageName=br.com.srm/cadastro
+```bash
+  gradlew clean build
 ```
 
-## Further readings
+Execute o seguinte comando para executar a aplicação localmente
 
-* [Gradle user manual](https://docs.gradle.org/)  
-* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
-* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)  
+```bash
+  java -jar ./build/libs/cadastro-0.0.1-SNAPSHOT.jar
+```
+
+## Documentação da API
+
+
+
+
+#### Cria nova pessoa.
+
+```http
+  POST /api/pessoas
+```
+
+{
+	"identificador":12345678910203,
+	"nome":"Nome"
+}
+
+#### Lista todas as pessoas.
+```http
+  GET /api/pessoas
+```
+
+#### Swagger UI
+
+```bash
+  http://localhost:{PORTA}/v1/swagger-ui.html
+```
+## Tecnologias utilizadas
+
+ - [Java 17](hhttps://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+ - [Gradle](https://gradle.org/)
+ - [SpringBoot](https://spring.io/projects/spring-boot)
+ - [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc)
+ - [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+ - [Spring Doc Open API](https://springdoc.org/)
+ - [PostgreSQL](https://www.postgresql.org/docs/)
+ - [Lombok](https://projectlombok.org/)
+ - [Hibernate + Validator](https://hibernate.org/validator/)
+
